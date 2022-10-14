@@ -4,21 +4,19 @@ import { LessonRepository } from "../../../application/repositories/lesson-repos
 export class InMemoryLessonRepository implements LessonRepository{
     public items: Lesson[] = [];
 
-    async findAllLesssons(page: number, size: number, sort: string | null, filter: string | null): Promise<Lesson[] | null> {
+    async findAllLesssons(page: number, size: number, sort: string | null, order: string | null, filter: string | null): Promise<Lesson[] | null> {
         let lessons: Lesson[] = this.items;
 
         if(lessons.length === 0)
             return null;
         
         if(filter)
-            lessons = this.items.filter(lesson => lesson.title.includes(filter));
+            lessons = lessons.filter(lesson => lesson.title.includes(filter));
         
-        if(sort)
-            if(sort === 'desc'){
-                lessons = this.items.sort((a:any, b:any) => a.id + b.id)
-            }else{
-                lessons = this.items.sort((a:any, b:any) => a.id - b.id)
-            }
+   
+        if(order)
+            if(order === 'desc')
+                lessons = lessons.reverse();
 
         return lessons.slice((page - 1) * size, page * size);;
     }
@@ -27,7 +25,7 @@ export class InMemoryLessonRepository implements LessonRepository{
         let lessons: Lesson[] = this.items;
         
         if(filter)
-            lessons = this.items.filter(lesson => lesson.title.includes(filter));
+            lessons = lessons.filter(lesson => lesson.title.includes(filter));
 
         return lessons.length;
     }

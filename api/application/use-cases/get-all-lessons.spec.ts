@@ -84,4 +84,84 @@ describe('Get All Lessons', () => {
             size: 5
         })).resolves.toHaveProperty('first', false);
     });
+
+    it('Should be validation that order is desc', async () => {
+        const lessonRepository = new InMemoryLessonRepository();
+
+        const sutCreateLesson = new CreateLesson(lessonRepository);
+        const sutGetAllLessons = new GetAllLessons(lessonRepository);
+
+        for(let i = 0; i < 10; i++){
+            await sutCreateLesson.execute({
+                id: i + 1,
+                title: `Lesson ${i + 1}`,
+                ordenation: i + 1
+            });
+        }
+
+        const lessons = await sutGetAllLessons.execute({
+            order: 'desc'
+        })
+
+        expect(lessons.content[0].id).toEqual(10);
+    });
+
+    it('Should be validation that order is asc', async () => {
+        const lessonRepository = new InMemoryLessonRepository();
+
+        const sutCreateLesson = new CreateLesson(lessonRepository);
+        const sutGetAllLessons = new GetAllLessons(lessonRepository);
+
+        for(let i = 0; i < 10; i++){
+            await sutCreateLesson.execute({
+                id: i + 1,
+                title: `Lesson ${i + 1}`,
+                ordenation: i + 1
+            });
+        }
+
+        const lessons = await sutGetAllLessons.execute({
+            order: 'asc'
+        })
+
+        expect(lessons.content[0].id).toEqual(1);
+    });
+
+    it('Should be validation sort is valid', async () => {
+        const lessonRepository = new InMemoryLessonRepository();
+
+        const sutCreateLesson = new CreateLesson(lessonRepository);
+        const sutGetAllLessons = new GetAllLessons(lessonRepository);
+
+        for(let i = 0; i < 10; i++){
+            await sutCreateLesson.execute({
+                id: i + 1,
+                title: `Lesson ${i + 1}`,
+                ordenation: i + 1
+            });
+        }
+
+        expect(sutGetAllLessons.execute({
+           sort: 'id'
+        })).resolves.toHaveProperty('content');
+    });
+
+    it('Should be validation sort not is valid', async () => {
+        const lessonRepository = new InMemoryLessonRepository();
+
+        const sutCreateLesson = new CreateLesson(lessonRepository);
+        const sutGetAllLessons = new GetAllLessons(lessonRepository);
+
+        for(let i = 0; i < 10; i++){
+            await sutCreateLesson.execute({
+                id: i + 1,
+                title: `Lesson ${i + 1}`,
+                ordenation: i + 1
+            });
+        }
+
+        expect(sutGetAllLessons.execute({
+           sort: 'created_at'
+        })).rejects.toBeInstanceOf(Error);
+    });
 });

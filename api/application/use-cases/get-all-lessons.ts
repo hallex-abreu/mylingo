@@ -5,6 +5,7 @@ interface GetAllLessonsRequest{
     page?: number,
     size?: number,
     sort?: string | null,
+    order?: string,
     filter?: string | null
 }
 
@@ -24,11 +25,16 @@ export class GetAllLessons{
         private lessonRepository: LessonRepository
     ){}
 
-    async execute({page = 1, size = 10, sort = null, filter = null}: GetAllLessonsRequest): Promise<GetAllLessonsResponse>{
-        const lessons = await this.lessonRepository.findAllLesssons(page, size, sort, filter);
-        
+    async execute({page = 1, size = 10, sort = null, order = 'desc', filter = null}: GetAllLessonsRequest): Promise<GetAllLessonsResponse>{
+        const lessons = await this.lessonRepository.findAllLesssons(page, size, sort, order, filter);
+
         if(!lessons)
             throw new Error('Does not exist lessons');
+
+        if(sort){
+            if(sort !== 'id' && sort !== 'title' && sort !== 'ordenation')
+                throw new Error('Does not exist this sort param');
+        }
 
         const count = await this.lessonRepository.getCountLessons(filter);
 
