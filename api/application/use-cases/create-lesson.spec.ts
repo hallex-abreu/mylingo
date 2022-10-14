@@ -10,7 +10,6 @@ describe('Create lesson', () => {
         const sut = new CreateLesson(lessonRepository);
 
         expect(sut.execute({
-            id: null,
             title: 'Introdução',
             ordenation: 1
         })).resolves.toBeInstanceOf(Lesson)
@@ -22,13 +21,11 @@ describe('Create lesson', () => {
         const sut = new CreateLesson(lessonRepository);
 
         await sut.execute({
-            id: null,
             title: 'Introdução',
             ordenation: 1
         });
 
         expect(sut.execute({
-            id: null,
             title: 'Introdução',
             ordenation: 1
         })).rejects.toBeInstanceOf(Error)
@@ -40,13 +37,11 @@ describe('Create lesson', () => {
         const sut = new CreateLesson(lessonRepository);
 
         await sut.execute({
-            id: null,
             title: 'Introdução',
             ordenation: 1
         });
 
         expect(sut.execute({
-            id: null,
             title: 'Números',
             ordenation: 1
         })).rejects.toBeInstanceOf(Error)

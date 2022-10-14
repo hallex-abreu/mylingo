@@ -42,7 +42,6 @@ describe('Create lesson', () => {
         });
 
         expect(stuOption.execute({
-            id: null,
             question_id: 1,
             title: 'Coffee and tea please'
         })).resolves.toBeInstanceOf(Option)
@@ -81,13 +80,11 @@ describe('Create lesson', () => {
         });
 
         await stuOption.execute({
-            id: null,
             question_id: 1,
             title: 'Coffee and tea please'
         });
 
         expect(stuOption.execute({
-            id: null,
             question_id: 1,
             title: 'Coffee and tea please'
         })).rejects.toBeInstanceOf(Error)
