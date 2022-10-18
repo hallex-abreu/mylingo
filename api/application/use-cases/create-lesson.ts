@@ -2,7 +2,7 @@ import { Lesson } from "../../domain/lesson";
 import { LessonRepository } from "../repositories/lesson-repository";
 
 interface ICreateLessonRequest {
-    id?: number | null,
+    id?: number,
     title: string,
     ordenation: number
 }
@@ -14,7 +14,7 @@ export class CreateLesson {
         private lessonRepository: LessonRepository
     ){}
 
-    async execute({id = null, title, ordenation}: ICreateLessonRequest): Promise<ICreateLessonResponse>{
+    async execute({id, title, ordenation}: ICreateLessonRequest): Promise<ICreateLessonResponse>{
         const exist_lesson_by_title = await this.lessonRepository.findLessonByTitle(title);
 
         if(exist_lesson_by_title)

@@ -27,7 +27,6 @@ describe('Create lesson', () => {
         });
 
         expect(sutQuestion.execute({
-            id: null,
             lesson_id: 1,
             title: 'Café e chá por favor',
             response: 'Coffee and tea please'

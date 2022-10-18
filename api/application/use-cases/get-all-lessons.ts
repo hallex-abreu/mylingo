@@ -4,9 +4,9 @@ import { LessonRepository } from "../repositories/lesson-repository";
 interface GetAllLessonsRequest{
     page?: number,
     size?: number,
-    sort?: string | null,
+    sort?: string,
     order?: string,
-    filter?: string | null
+    filter?: string
 }
 
 export interface GetAllLessonsResponse{
@@ -25,7 +25,7 @@ export class GetAllLessons{
         private lessonRepository: LessonRepository
     ){}
 
-    async execute({page = 1, size = 10, sort = null, order = 'desc', filter = null}: GetAllLessonsRequest): Promise<GetAllLessonsResponse>{
+    async execute({page = 1, size = 10, sort = undefined, order = 'desc', filter = undefined}: GetAllLessonsRequest): Promise<GetAllLessonsResponse>{
         const lessons = await this.lessonRepository.findAllLesssons(page, size, sort, order, filter);
 
         if(!lessons)

@@ -3,7 +3,7 @@ import { OptionRepository } from "../repositories/option-repository";
 import { QuestionRepository } from "../repositories/question-repository";
 
 interface CreateOptionRequest{
-    id?: number | null,
+    id?: number,
     question_id: number,
     title: string
 }
@@ -16,7 +16,7 @@ export class CreateOption{
         private optionRepository: OptionRepository
     ){}   
 
-    async execute({id = null, question_id, title}: CreateOptionRequest): Promise<CreateOptionResponse>{
+    async execute({id, question_id, title}: CreateOptionRequest): Promise<CreateOptionResponse>{
         const exist_question_by_id = await this.questionRepository.findQuestionById(question_id);
 
         if(!exist_question_by_id)

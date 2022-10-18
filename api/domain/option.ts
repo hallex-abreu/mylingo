@@ -1,25 +1,35 @@
 export interface IOption{
-    id: number | null,
+    id?: number,
     question_id: number,
-    title: string
+    title: string,
+    created_at?: Date,
+    updated_at?: Date
 }
 
 export class Option {
     private props: IOption;
 
-    get id(): number | null{
+    get id(): number | undefined {
         return this.props.id;
     }
 
-    get question_id(): number{
+    get question_id(): number {
         return this.props.question_id;
     }
 
-    get title(): string{
+    get title(): string {
         return this.props.title;
     }
 
-    constructor(props: IOption){
+    get created_at(): Date | undefined {
+        return this.created_at;
+    }
+
+    get updated_at(): Date | undefined {
+        return this.updated_at;
+    }
+
+    constructor(props: IOption) {
         this.props = props;
     }
 }

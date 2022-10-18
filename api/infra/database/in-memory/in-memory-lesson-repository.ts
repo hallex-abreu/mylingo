@@ -4,7 +4,7 @@ import { LessonRepository } from "../../../application/repositories/lesson-repos
 export class InMemoryLessonRepository implements LessonRepository{
     public items: Lesson[] = [];
 
-    async findAllLesssons(page: number, size: number, sort: string | null, order: string | null, filter: string | null): Promise<Lesson[] | null> {
+    async findAllLesssons(page: number, size: number, sort: string | undefined, order: string | undefined, filter: string | undefined): Promise<Lesson[] | null> {
         let lessons: Lesson[] = this.items;
 
         if(lessons.length === 0)
@@ -21,7 +21,7 @@ export class InMemoryLessonRepository implements LessonRepository{
         return lessons.slice((page - 1) * size, page * size);;
     }
 
-    async getCountLessons(filter: string | null): Promise<number> {
+    async getCountLessons(filter: string | undefined): Promise<number> {
         let lessons: Lesson[] = this.items;
         
         if(filter)
